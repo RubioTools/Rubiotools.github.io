@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Urlaubsanspruch-Rechner 2026: Teilzeit, Minijob, Ein- und Austritt</title>
+<meta name="description" content="Wie viele Urlaubstage stehen dir zu? Kostenloser Rechner für Teilzeit, Minijob, Jobwechsel und Kündigung – mit Teilurlaub nach § 5 BUrlG und Schwerbehinderung.">
+<link rel="canonical" href="https://DEINE-DOMAIN.de/urlaubsanspruch-rechner">
+<!-- Hier später das AdSense-Script einfügen (erst nach Cookie-Einwilligung laden!) -->
+<style>
+:root{
+  --bg:#F5F8FA; --surface:#FFFFFF; --text:#1D2B3A; --muted:#566676;
+  --sea:#1F6F8B; --sea-soft:#E3F0F5; --sun:#E8A800; --line:#D5DEE6; --warn:#9A4A00; --warn-bg:#FFF4E0;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0F1720; --surface:#17222E; --text:#E6EDF3; --muted:#9AABBB;
+    --sea:#6BB9D4; --sea-soft:#1B3442; --sun:#F2C14E; --line:#2A3A4A; --warn:#F5B971; --warn-bg:#33240F;
+    color-scheme:dark;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:1.0625rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+h1,h2,h3{font-family:ui-rounded,"SF Pro Rounded","Nunito","Varela Round",system-ui,sans-serif;line-height:1.2;margin:0}
+main{max-width:44rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+header p{color:var(--muted);margin:.75rem 0 0;max-width:36rem}
+h1{font-size:clamp(1.9rem,6vw,2.6rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:750;margin-top:3rem}
+h3{font-size:1.1rem;font-weight:700;margin-top:1.75rem}
+a{color:var(--sea)}
+
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.5rem;margin-top:2rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.25rem}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:600;font-size:.95rem}
+.hint{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+input,select{width:100%;margin-top:.35rem;font:inherit;color:var(--text);background:var(--bg);
+  border:1.5px solid var(--line);border-radius:10px;padding:.6rem .7rem}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.check{display:flex;gap:.6rem;align-items:flex-start;grid-column:1/-1;font-weight:500}
+.check input{width:1.2rem;height:1.2rem;margin:.2rem 0 0;accent-color:var(--sea)}
+button{margin-top:1.25rem;font:inherit;font-weight:700;background:var(--sea);color:#fff;border:0;border-radius:12px;padding:.8rem 1.4rem;cursor:pointer}
+@media (prefers-color-scheme:dark){button{color:#0F1720}}
+
+.result{margin-top:1.5rem;padding-top:1.5rem;border-top:1px dashed var(--line)}
+.result[hidden]{display:none}
+.big{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.big strong{font-family:ui-rounded,"SF Pro Rounded","Nunito",system-ui,sans-serif;font-size:3.4rem;line-height:1;color:var(--sea)}
+.big span{font-size:1.1rem;font-weight:600}
+.months{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:1.1rem 0 .4rem}
+.months div{height:2.1rem;border-radius:6px;background:var(--sea-soft);display:grid;place-items:center;
+  font-size:.7rem;color:var(--muted);transition:background .3s}
+.months div.on{background:var(--sun);color:#1D2B3A;font-weight:700}
+@media (prefers-reduced-motion:reduce){.months div{transition:none}}
+.legend{font-size:.85rem;color:var(--muted);margin:0}
+.notes{margin:1rem 0 0;padding:0;list-style:none}
+.notes li{font-size:.95rem;margin-top:.6rem;padding-left:1rem;border-left:3px solid var(--sea)}
+.notes li.warn{border-color:var(--sun);background:var(--warn-bg);color:var(--warn);padding:.5rem .75rem}
+.error{color:var(--warn);background:var(--warn-bg);padding:.6rem .8rem;border-radius:10px;margin-top:1rem}
+
+.formula{background:var(--sea-soft);border-radius:12px;padding:1rem 1.2rem;font-weight:600;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin-top:.75rem}
+.tablewrap{overflow-x:auto}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line)}
+th{font-weight:700}
+details{border-bottom:1px solid var(--line);padding:.9rem 0}
+summary{font-weight:700;cursor:pointer}
+details p{margin:.6rem 0 0;color:var(--muted)}
+.disclaimer{font-size:.85rem;color:var(--muted);margin-top:3rem}
+footer{max-width:44rem;margin:0 auto;padding:1.5rem 1.25rem 2.5rem;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+footer a{margin-right:1.2rem}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Wie viele Urlaubstage stehen mir gesetzlich zu?","acceptedAnswer":{"@type":"Answer","text":"Das Bundesurlaubsgesetz garantiert 24 Werktage bei einer 6-Tage-Woche. Bei einer 5-Tage-Woche sind das 20 Arbeitstage, bei weniger Arbeitstagen entsprechend anteilig weniger."}},
+{"@type":"Question","name":"Wie berechne ich meinen Urlaub in Teilzeit?","acceptedAnswer":{"@type":"Answer","text":"Urlaubstage bei Vollzeit geteilt durch die Vollzeit-Arbeitstage pro Woche, multipliziert mit deinen eigenen Arbeitstagen pro Woche. Beispiel: 30 Tage / 5 × 3 = 18 Urlaubstage."}},
+{"@type":"Question","name":"Haben Minijobber Anspruch auf Urlaub?","acceptedAnswer":{"@type":"Answer","text":"Ja. Minijobber haben denselben gesetzlichen Urlaubsanspruch wie alle anderen Beschäftigten, berechnet nach ihren Arbeitstagen pro Woche."}},
+{"@type":"Question","name":"Wie viel Urlaub habe ich, wenn ich im Laufe des Jahres anfange?","acceptedAnswer":{"@type":"Answer","text":"Beginnst du nach dem 1. Juli, erhältst du im ersten Jahr Teilurlaub: ein Zwölftel des Jahresurlaubs für jeden vollen Beschäftigungsmonat."}},
+{"@type":"Question","name":"Wie viel Urlaub habe ich bei einer Kündigung?","acceptedAnswer":{"@type":"Answer","text":"Endet das Arbeitsverhältnis bis zum 30. Juni, gibt es ein Zwölftel pro vollem Monat. Endet es nach dem 30. Juni und hast du die sechsmonatige Wartezeit erfüllt, steht dir mindestens der volle gesetzliche Jahresurlaub zu."}}
+]}
+</script>
+</head>
+<body>
+<main>
+<header>
+  <h1>Urlaubsanspruch-Rechner</h1>
+  <p>Wie viele Urlaubstage stehen dir zu? Gib deine Arbeitstage und deinen Vertragsurlaub ein. Der Rechner berücksichtigt Teilzeit, Minijob, Jobwechsel und Kündigung nach dem Bundesurlaubsgesetz.</p>
+</header>
+
+<section class="calc" aria-labelledby="calc-title">
+  <h2 id="calc-title" style="margin-top:0">Urlaub berechnen</h2>
+  <div class="grid" style="margin-top:1.25rem">
+    <label>Deine Arbeitstage pro Woche
+      <select id="dpw">
+        <option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option>
+        <option>3.5</option><option>4</option><option>4.5</option><option selected>5</option><option>5.5</option><option>6</option>
+      </select>
+    </label>
+    <label>Urlaubstage bei Vollzeit
+      <span class="hint">laut Vertrag oder Tarif</span>
+      <input id="vertrag" type="number" min="0" max="60" step="0.5" value="30" inputmode="decimal">
+    </label>
+    <label>Vollzeit im Betrieb
+      <select id="basis"><option value="5" selected>5-Tage-Woche</option><option value="6">6-Tage-Woche</option></select>
+    </label>
+    <label>Kalenderjahr
+      <input id="year" type="number" min="2000" max="2100" value="2026" inputmode="numeric">
+    </label>
+    <label>Beginn des Arbeitsverhältnisses
+      <span class="hint">leer lassen, wenn vor diesem Jahr</span>
+      <input id="start" type="date">
+    </label>
+    <label>Ende des Arbeitsverhältnisses
+      <span class="hint">leer lassen, wenn es weiterläuft</span>
+      <input id="end" type="date">
+    </label>
+    <label class="check"><input id="sb" type="checkbox"> Ich bin schwerbehindert (GdB 50 oder mehr) und habe Anspruch auf Zusatzurlaub</label>
+  </div>
+  <button id="calc" type="button">Urlaub berechnen</button>
+
+  <div id="error" class="error" role="alert" hidden></div>
+  <div id="result" class="result" hidden aria-live="polite">
+    <div class="big"><strong id="days">–</strong><span id="unit">Urlaubstage</span></div>
+    <div class="months" id="months" aria-hidden="true"></div>
+    <p class="legend" id="legend"></p>
+    <ul class="notes" id="notes"></ul>
+  </div>
+</section>
+
+<!-- Werbefläche 1 (z. B. AdSense responsive) -->
+
+<h2>So wird der Urlaubsanspruch berechnet</h2>
+<p>Grundlage ist das Bundesurlaubsgesetz (BUrlG). Es garantiert mindestens 24 Werktage im Jahr, wobei es von einer 6-Tage-Woche ausgeht. Bei einer 5-Tage-Woche entspricht das 20 Arbeitstagen. Viele Arbeits- und Tarifverträge gewähren mehr, häufig 25 bis 30 Tage.</p>
+<p class="formula">Urlaubstage = Vollzeit-Urlaub ÷ Vollzeit-Arbeitstage × deine Arbeitstage</p>
+
+<h3>Urlaub in Teilzeit und im Minijob</h3>
+<p>Wer an weniger Tagen pro Woche arbeitet, bekommt weniger Urlaubstage, aber gleich viele freie Wochen. Ob du am Tag 2 oder 8 Stunden arbeitest, spielt keine Rolle: Es zählen nur die Arbeitstage. Minijobber haben genau denselben Anspruch.</p>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Arbeitstage/Woche</th><th>Gesetzliches Minimum</th><th>Bei 30 Tagen Vollzeit</th></tr></thead>
+  <tbody>
+    <tr><td>5</td><td>20 Tage</td><td>30 Tage</td></tr>
+    <tr><td>4</td><td>16 Tage</td><td>24 Tage</td></tr>
+    <tr><td>3</td><td>12 Tage</td><td>18 Tage</td></tr>
+    <tr><td>2</td><td>8 Tage</td><td>12 Tage</td></tr>
+    <tr><td>1</td><td>4 Tage</td><td>6 Tage</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Teilurlaub bei Jobbeginn oder Kündigung</h3>
+<p>Den vollen Urlaubsanspruch erwirbst du erst nach einer Wartezeit von sechs Monaten. Davor gibt es Teilurlaub: ein Zwölftel des Jahresurlaubs für jeden vollen Beschäftigungsmonat (§ 5 BUrlG). Das gilt, wenn du nach dem 1. Juli anfängst, wenn du vor Ende der Wartezeit ausscheidest oder wenn dein Arbeitsverhältnis bis zum 30. Juni endet.</p>
+<p>Endet das Arbeitsverhältnis nach dem 30. Juni und hast du die Wartezeit erfüllt, steht dir der volle gesetzliche Mindesturlaub zu. Den Urlaub, der darüber hinausgeht, darf der Vertrag anteilig kürzen.</p>
+<p>Ergibt die Rechnung einen halben Tag oder mehr, wird auf einen ganzen Tag aufgerundet. Kleinere Bruchteile werden nicht abgerundet, sondern stundenweise gewährt.</p>
+
+<h3>Zusatzurlaub bei Schwerbehinderung</h3>
+<p>Schwerbehinderte Menschen haben Anspruch auf fünf zusätzliche Arbeitstage bei einer 5-Tage-Woche (§ 208 SGB IX). Bei weniger Arbeitstagen verringert sich der Zusatzurlaub entsprechend.</p>
+
+<!-- Werbefläche 2 -->
+
+<h2>Häufige Fragen</h2>
+<details><summary>Wie viele Urlaubstage stehen mir gesetzlich zu?</summary>
+<p>24 Werktage bei einer 6-Tage-Woche, also 20 Arbeitstage bei einer 5-Tage-Woche. Bei weniger Arbeitstagen entsprechend anteilig weniger.</p></details>
+<details><summary>Wie berechne ich meinen Urlaub in Teilzeit?</summary>
+<p>Vollzeit-Urlaub geteilt durch die Vollzeit-Arbeitstage, mal deine eigenen Arbeitstage. Beispiel: 30 ÷ 5 × 3 = 18 Urlaubstage.</p></details>
+<details><summary>Haben Minijobber Anspruch auf Urlaub?</summary>
+<p>Ja, genauso wie alle anderen Beschäftigten. Berechnet wird nach den Arbeitstagen pro Woche.</p></details>
+<details><summary>Wie viel Urlaub habe ich, wenn ich im Laufe des Jahres anfange?</summary>
+<p>Beginnst du nach dem 1. Juli, gibt es im ersten Jahr ein Zwölftel des Jahresurlaubs pro vollem Monat. Urlaub, den dir dein alter Arbeitgeber in diesem Jahr schon gewährt hat, wird angerechnet (§ 6 BUrlG). Lass dir deshalb eine Urlaubsbescheinigung geben.</p></details>
+<details><summary>Wie viel Urlaub habe ich bei einer Kündigung?</summary>
+<p>Endet das Arbeitsverhältnis bis zum 30. Juni, gibt es ein Zwölftel pro vollem Monat. Danach steht dir bei erfüllter Wartezeit mindestens der volle gesetzliche Urlaub zu. Kannst du ihn nicht mehr nehmen, muss er ausgezahlt werden.</p></details>
+
+<p class="disclaimer">Alle Angaben ohne Gewähr. Dieser Rechner ersetzt keine Rechtsberatung. Abweichende Regelungen in Arbeits- oder Tarifverträgen sind möglich.</p>
+</main>
+
+<footer>
+  <a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a>
+</footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const DAY = 864e5;
+  const fmt = n => n.toLocaleString('de-DE',{maximumFractionDigits:2});
+  const parse = v => { if(!v) return null; const [y,m,d] = v.split('-').map(Number); return Date.UTC(y,m-1,d); };
+  const addMonths = (t,k) => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth()+k, d.getUTCDate()); };
+  const fullMonths = (s,e) => { let n = 0; while(n < 13 && addMonths(s,n+1) - DAY <= e) n++; return n; };
+  const MONTHS = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+
+  function teil(annual, months){
+    const raw = annual * months / 12;
+    const frac = raw - Math.floor(raw);
+    return frac >= 0.5 - 1e-9 ? Math.ceil(raw) : Math.round(raw*100)/100;
+  }
+
+  function calc(){
+    const err = $('error'), res = $('result');
+    err.hidden = true;
+    const dpw = +$('dpw').value, basis = +$('basis').value, year = +$('year').value;
+    const vertrag = parseFloat(String($('vertrag').value).replace(',','.'));
+    if(!(vertrag >= 0) || !(year >= 2000)){ return fail('Bitte gib gültige Urlaubstage und ein gültiges Jahr ein.'); }
+    const s = parse($('start').value), e = parse($('end').value);
+    const ys = Date.UTC(year,0,1), ye = Date.UTC(year,11,31), june30 = Date.UTC(year,5,30);
+    if(s && e && s > e) return fail('Das Ende liegt vor dem Beginn. Bitte prüfe die Daten.');
+    if((s && s > ye) || (e && e < ys)) return fail('In diesem Kalenderjahr bestand kein Arbeitsverhältnis. Bitte prüfe Jahr und Daten.');
+
+    const notes = [];
+    const legal = 24 * dpw / 6;
+    let annual = vertrag * dpw / basis;
+    if(annual < legal - 1e-9){
+      notes.push(['warn', `Dein Vertragsurlaub liegt unter dem gesetzlichen Minimum. Es gelten mindestens ${fmt(legal)} Tage.`]);
+      annual = legal;
+    }
+    const sb = $('sb').checked ? dpw : 0;
+    annual += sb; const legalTotal = legal + sb;
+    if(sb) notes.push(['', `Enthält ${fmt(sb)} Tage Zusatzurlaub wegen Schwerbehinderung.`]);
+
+    const ps = s && s > ys ? s : ys, pe = e && e < ye ? e : ye;
+    const months = fullMonths(ps, pe);
+    const waitEnd = s ? addMonths(s,6) - DAY : null;
+    const fulfilled = d => !s || waitEnd <= d;
+
+    let result, isTeil = false;
+    if(e && e < ye){
+      isTeil = e <= june30 || !fulfilled(e);
+    } else if(s && s > ys){
+      isTeil = !fulfilled(ye);
+    }
+
+    if(isTeil){
+      result = teil(annual, months);
+      notes.unshift(['', `Teilurlaub nach § 5 BUrlG: ${fmt(annual)} Tage ÷ 12 × ${months} volle Monate.`]);
+      if(result % 1 !== 0) notes.push(['', 'Bruchteile unter einem halben Tag werden nicht abgerundet, sondern stundenweise gewährt.']);
+    } else {
+      result = Math.round(annual*100)/100;
+      const partial = (s && s > ys) || (e && e < ye);
+      if(partial && annual > legalTotal + 1e-9){
+        const min = teil(annual - legalTotal, months) + legalTotal;
+        notes.unshift(['', `Gesetzlich steht dir der volle Mindesturlaub zu. Je nach Vertrag kann der Zusatzurlaub anteilig gekürzt werden. Dann wären es mindestens ${fmt(Math.round(min*100)/100)} Tage.`]);
+      } else {
+        notes.unshift(['', `Voller Jahresurlaub: ${fmt(vertrag)} ÷ ${basis} × ${fmt(dpw)} Arbeitstage.`]);
+      }
+    }
+    if(s && s > ys) notes.push(['', 'Urlaub, den dir ein früherer Arbeitgeber in diesem Jahr schon gewährt hat, wird angerechnet (§ 6 BUrlG).']);
+    if(e && e < ye) notes.push(['', 'Urlaub, den du bis zum Ende nicht mehr nehmen kannst, muss ausgezahlt werden.']);
+
+    $('days').textContent = fmt(result);
+    $('unit').textContent = result === 1 ? 'Urlaubstag' : 'Urlaubstage';
+    const startIdx = new Date(ps).getUTCMonth() + (new Date(ps).getUTCDate() > 1 ? 1 : 0);
+    const filled = isTeil ? months : 12;
+    const from = isTeil ? Math.min(startIdx, 12 - months) : 0;
+    $('months').innerHTML = MONTHS.map((m,i) => `<div class="${i >= from && i < from + filled ? 'on' : ''}">${m}</div>`).join('');
+    $('legend').textContent = isTeil ? `${months} volle Beschäftigungsmonate zählen für ${year}.` : `Voller Anspruch für ${year}.`;
+    $('notes').innerHTML = notes.map(([c,t]) => `<li class="${c}">${t}</li>`).join('');
+    res.hidden = false;
+
+    function fail(msg){ err.textContent = msg; err.hidden = false; res.hidden = true; }
+  }
+  $('calc').addEventListener('click', calc);
+  calc();
+})();
+</script>
+</body>
+</html>
